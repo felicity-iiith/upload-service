@@ -27,7 +27,7 @@ app.post("/", function(req, res) {
     upload(req, res, function(err, val) {
         var toret = {
           status: !err,
-          path: req.file && req.file.filename
+          path: process.env.PUBLIC_FRONTEND_URL + '/' + (req.file && req.file.filename)
         }
         res.json(toret)
     });
