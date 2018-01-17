@@ -1,5 +1,6 @@
 var Express = require('express');
 var multer = require('multer');
+var randomstring = require("randomstring");
 var app = Express();
 app.use(require('./auth'))
 
@@ -8,7 +9,7 @@ var Storage = multer.diskStorage({
         callback(null, "./files");
     },
     filename: function(req, file, callback) {
-        callback(null, Date.now() + "_" + file.originalname);
+        callback(null, randomstring.generate(7) + "_" + file.originalname);
     }
 });
 
