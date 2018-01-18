@@ -2,6 +2,7 @@ var Express = require('express');
 var multer = require('multer');
 var randomstring = require("randomstring");
 var app = Express();
+app.use(require('cors')());
 app.use(require('./auth'))
 
 var Storage = multer.diskStorage({
