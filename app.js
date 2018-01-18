@@ -28,11 +28,10 @@ app.get("/", auth, function(req, res) {
 
 app.post("/", auth, function(req, res) {
     upload(req, res, function(err, val) {
-        var toret = {
-          status: !err,
-          path: process.env.PUBLIC_FRONTEND_URL + '/' + (req.file && req.file.filename)
-        }
-        res.json(toret)
+        if (err) res.json({ error: 'Error uploading file. ' + err.toString() })
+        else res.json({
+          filename: process.env.PUBLIC_FRONTEND_URL + '/' + (req.file && req.file.filename)
+        })
     });
 });
 
