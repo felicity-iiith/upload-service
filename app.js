@@ -1,9 +1,10 @@
 var Express = require('express');
 var multer = require('multer');
 var randomstring = require("randomstring");
+var basicAuth = require('basic-auth-connect');
 var app = Express();
 app.use(require('cors')());
-app.use(require('./auth'))
+var auth = basicAuth('admin', process.env.PASSWORD || 'password')
 
 var Storage = multer.diskStorage({
     destination: function(req, file, callback) {
@@ -21,11 +22,11 @@ var upload = multer({
     }
 }).single("file");
 
-app.get("/", function(req, res) {
+app.get("/", auth, function(req, res) {
     res.sendFile(__dirname + "/index.html");
 });
 
-app.post("/", function(req, res) {
+app.post("/", auth, function(req, res) {
     upload(req, res, function(err, val) {
         var toret = {
           status: !err,
